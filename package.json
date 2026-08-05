@@ -1,0 +1,21 @@
+{
+  "name": "fitsignal",
+  "version": "2.0.0",
+  "description": "Rubric-driven resume screening — deterministic scoring over an LLM assessment",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "score": "node src/cli.js",
+    "test": "node --test test/*.test.mjs"
+  },
+  "bin": {
+    "fitsignal": "./src/cli.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.115.0",
+    "@google-cloud/bigquery": "^8.3.1",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "yaml": "^2.9.0"
+  }
+}

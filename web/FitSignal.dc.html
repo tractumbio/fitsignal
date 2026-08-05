@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{background:oklch(0.98 0.004 265);font-family:'IBM Plex Sans',system-ui,sans-serif;color:oklch(0.24 0.012 265);-webkit-font-smoothing:antialiased}
+  a{color:oklch(0.52 0.15 275);text-decoration:none}
+  a:hover{color:oklch(0.44 0.15 275)}
+  @keyframes fs-spin{to{transform:rotate(360deg)}}
+  @keyframes fs-fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  @keyframes fs-pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  @keyframes fs-bar{from{width:0}}
+  @keyframes fs-dash{from{stroke-dashoffset:327}}
+  ::selection{background:oklch(0.82 0.09 275)}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+  <header style="display:flex;align-items:center;justify-content:space-between;padding:16px 32px;background:#fff;border-bottom:1px solid oklch(0.92 0.006 265);position:sticky;top:0;z-index:10">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="width:32px;height:32px;border-radius:8px;background:oklch(0.52 0.15 275);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:15px;font-family:'IBM Plex Mono',monospace">F</div>
+      <div>
+        <div style="font-weight:700;font-size:15px;letter-spacing:-0.01em">FitSignal</div>
+        <div style="font-size:11px;color:oklch(0.55 0.012 265);font-family:'IBM Plex Mono',monospace;letter-spacing:0.02em">ACCENTURE · CONSULTING ANALYST SCREEN</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:20px">
+      <div style="display:flex;align-items:center;gap:14px;font-size:12px;font-family:'IBM Plex Mono',monospace;color:oklch(0.6 0.012 265)">
+        <span style="{{ stepUploadStyle }}">1 UPLOAD</span>
+        <span style="color:oklch(0.85 0.006 265)">→</span>
+        <span style="{{ stepAnalyzeStyle }}">2 ANALYZE</span>
+        <span style="color:oklch(0.85 0.006 265)">→</span>
+        <span style="{{ stepResultStyle }}">3 RESULTS</span>
+      </div>
+      <div style="width:34px;height:34px;border-radius:50%;background:oklch(0.94 0.006 265);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:oklch(0.5 0.012 265)">RS</div>
+    </div>
+  </header>
+
+  <main style="flex:1;display:flex;flex-direction:column;align-items:center;padding:40px 32px 64px">
+
+    <sc-if value="{{ isUpload }}" hint-placeholder-val="{{ true }}">
+      <div style="width:100%;max-width:720px;animation:fs-fade .4s ease both">
+        <div style="text-align:center;margin-bottom:32px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:oklch(0.52 0.15 275);letter-spacing:0.08em;margin-bottom:10px">CANDIDATE SCREEN</div>
+          <h1 style="font-size:30px;font-weight:700;letter-spacing:-0.02em;margin-bottom:10px">Score a resume against the consulting bar</h1>
+          <p style="font-size:15px;color:oklch(0.5 0.012 265);line-height:1.5;max-width:520px;margin:0 auto">Upload a candidate's resume. FitSignal parses it and grades fit against the criteria that predict success in an Accenture consulting analyst role.</p>
+        </div>
+
+        <div style="background:#fff;border:1px solid oklch(0.92 0.006 265);border-radius:16px;padding:28px">
+          <input type="file" accept=".txt,text/plain" style="display:none" onChange="{{ handleFile }}" ref="{{ setFileInputRef }}">
+          <div onClick="{{ triggerFile }}" style="border:1.5px dashed oklch(0.85 0.01 275);border-radius:12px;padding:36px;text-align:center;cursor:pointer;background:oklch(0.985 0.004 275);transition:border-color .15s" style-hover="border-color:oklch(0.52 0.15 275);background:oklch(0.975 0.01 275)">
+            <div style="width:44px;height:44px;border-radius:11px;background:oklch(0.93 0.03 275);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:20px;color:oklch(0.52 0.15 275)">↑</div>
+            <div style="font-weight:600;font-size:15px;margin-bottom:4px">Drop a resume here, or click to browse</div>
+            <div style="font-size:13px;color:oklch(0.55 0.012 265)">Plain text (.txt) for now — or edit the text below</div>
+          </div>
+
+          <div style="margin-top:16px">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
+              <label style="font-size:12px;font-family:'IBM Plex Mono',monospace;color:oklch(0.55 0.012 265)">RESUME TEXT — {{ fileName }}</label>
+              <span style="font-size:11px;font-family:'IBM Plex Mono',monospace;color:oklch(0.6 0.012 265)">{{ charCount }} chars</span>
+            </div>
+            <textarea value="{{ resumeText }}" onChange="{{ setResumeText }}" rows="8" style="width:100%;border:1px solid oklch(0.9 0.006 265);border-radius:9px;padding:12px 14px;font-size:12.5px;font-family:'IBM Plex Mono',monospace;line-height:1.55;color:oklch(0.3 0.012 265);resize:vertical"></textarea>
+          </div>
+
+          <div style="display:flex;gap:12px;align-items:center;margin-top:20px">
+            <div style="flex:1">
+              <label style="display:block;font-size:12px;font-family:'IBM Plex Mono',monospace;color:oklch(0.55 0.012 265);margin-bottom:6px">TARGET ROLE</label>
+              <div style="padding:11px 14px;border:1px solid oklch(0.9 0.006 265);border-radius:9px;font-size:14px;background:#fff;display:flex;justify-content:space-between;align-items:center">Consulting Analyst — Strategy<span style="color:oklch(0.7 0.012 265)">▾</span></div>
+            </div>
+            <button onClick="{{ startAnalyze }}" style="align-self:flex-end;padding:12px 24px;background:oklch(0.52 0.15 275);color:#fff;border:none;border-radius:9px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;transition:background .15s" style-hover="background:oklch(0.44 0.15 275)">Analyze resume →</button>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px">
+          <div style="background:#fff;border:1px solid oklch(0.93 0.006 265);border-radius:10px;padding:14px">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:oklch(0.52 0.15 275);margin-bottom:6px">8 SIGNALS</div>
+            <div style="font-size:13px;color:oklch(0.45 0.012 265);line-height:1.4">Skills, experience, culture, ATS coverage & more</div>
+          </div>
+          <div style="background:#fff;border:1px solid oklch(0.93 0.006 265);border-radius:10px;padding:14px">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:oklch(0.52 0.15 275);margin-bottom:6px">~4 SEC</div>
+            <div style="font-size:13px;color:oklch(0.45 0.012 265);line-height:1.4">Parsed and scored in seconds, not minutes</div>
+          </div>
+          <div style="background:#fff;border:1px solid oklch(0.93 0.006 265);border-radius:10px;padding:14px">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:oklch(0.52 0.15 275);margin-bottom:6px">EXPLAINABLE</div>
+            <div style="font-size:13px;color:oklch(0.45 0.012 265);line-height:1.4">Every score traces back to evidence in the resume</div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isAnalyzing }}" hint-placeholder-val="{{ false }}">
+      <div style="width:100%;max-width:520px;margin-top:48px;text-align:center;animation:fs-fade .4s ease both">
+        <div style="position:relative;width:96px;height:96px;margin:0 auto 28px">
+          <div style="position:absolute;inset:0;border-radius:50%;border:4px solid oklch(0.92 0.02 275)"></div>
+          <div style="position:absolute;inset:0;border-radius:50%;border:4px solid transparent;border-top-color:oklch(0.52 0.15 275);animation:fs-spin 1s linear infinite"></div>
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:20px;color:oklch(0.52 0.15 275)">{{ progressPct }}</div>
+        </div>
+        <h2 style="font-size:20px;font-weight:700;letter-spacing:-0.01em;margin-bottom:6px">Analyzing {{ fileName }}</h2>
+        <p style="font-size:14px;color:oklch(0.55 0.012 265);margin-bottom:28px">Matching against the consulting analyst rubric</p>
+        <div style="background:#fff;border:1px solid oklch(0.92 0.006 265);border-radius:12px;padding:8px;text-align:left">
+          <sc-for list="{{ steps }}" as="s" hint-placeholder-count="4">
+            <div style="display:flex;align-items:center;gap:12px;padding:12px 14px">
+              <div style="width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;{{ dummy }}background:{{ s.dotBg }};color:{{ s.dotColor }};border:{{ s.dotBorder }}">{{ s.icon }}</div>
+              <div style="flex:1;font-size:14px;color:{{ s.textColor }};font-weight:{{ s.weight }}">{{ s.label }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isResults }}" hint-placeholder-val="{{ false }}">
+      <div style="width:100%;max-width:960px;animation:fs-fade .4s ease both">
+
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;flex-wrap:wrap;gap:16px">
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:oklch(0.52 0.15 275);letter-spacing:0.06em;margin-bottom:6px">SCORECARD · {{ fileName }}</div>
+            <h1 style="font-size:26px;font-weight:700;letter-spacing:-0.02em">{{ candidate }}</h1>
+            <div style="font-size:14px;color:oklch(0.5 0.012 265);margin-top:2px">Applying for Consulting Analyst — Strategy</div>
+          </div>
+          <div style="display:flex;gap:10px">
+            <button onClick="{{ toUpload }}" style="padding:10px 16px;background:#fff;color:oklch(0.35 0.012 265);border:1px solid oklch(0.88 0.006 265);border-radius:9px;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer" style-hover="border-color:oklch(0.52 0.15 275);color:oklch(0.52 0.15 275)">Edit &amp; re-run</button>
+            <button onClick="{{ downloadReport }}" style="padding:10px 16px;background:oklch(0.52 0.15 275);color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer" style-hover="background:oklch(0.44 0.15 275)">Download report</button>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:16px;margin-bottom:16px">
+          <div style="background:#fff;border:1px solid oklch(0.92 0.006 265);border-radius:14px;padding:22px;display:flex;align-items:center;gap:18px">
+            <div style="position:relative;width:104px;height:104px;flex-shrink:0">
+              <svg width="104" height="104" viewBox="0 0 120 120" style="transform:rotate(-90deg)">
+                <circle cx="60" cy="60" r="52" fill="none" stroke="oklch(0.93 0.01 275)" stroke-width="12"></circle>
+                <circle cx="60" cy="60" r="52" fill="none" stroke="{{ overallColor }}" stroke-width="12" stroke-linecap="round" stroke-dasharray="327" stroke-dashoffset="{{ overallOffset }}" style="animation:fs-dash 1s ease both"></circle>
+              </svg>
+              <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+                <div style="font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:30px;line-height:1;color:{{ overallColor }}">{{ overall }}</div>
+                <div style="font-size:10px;font-family:'IBM Plex Mono',monospace;color:oklch(0.6 0.012 265);letter-spacing:0.05em">/ 100</div>
+              </div>
+            </div>
+            <div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:oklch(0.55 0.012 265);letter-spacing:0.05em">OVERALL FIT</div>
+              <div style="font-size:16px;font-weight:700;margin:4px 0 8px;color:{{ overallColor }}">{{ verdict }}</div>
+              <div style="font-size:13px;color:oklch(0.48 0.012 265);line-height:1.4">{{ verdictNote }}</div>
+            </div>
+          </div>
+
+          <div style="background:#fff;border:1px solid oklch(0.92 0.006 265);border-radius:14px;padding:22px;display:flex;flex-direction:column;justify-content:center">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:oklch(0.55 0.012 265);letter-spacing:0.05em;margin-bottom:8px">LIKELIHOOD OF SUCCESS</div>
+            <div style="display:flex;align-items:baseline;gap:6px"><span style="font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:38px;color:oklch(0.52 0.15 275)">{{ likelihood }}</span><span style="font-size:18px;color:oklch(0.6 0.012 265)">%</span></div>
+            <div style="font-size:12px;color:oklch(0.5 0.012 265);line-height:1.4;margin-top:6px">Modeled against 3-yr outcomes of hired analysts with similar profiles</div>
+          </div>
+
+          <div style="background:#fff;border:1px solid oklch(0.92 0.006 265);border-radius:14px;padding:22px;display:flex;flex-direction:column;justify-content:center">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:oklch(0.55 0.012 265);letter-spacing:0.05em;margin-bottom:12px">RECOMMENDATION</div>
+            <div style="display:inline-flex;align-items:center;gap:8px;align-self:flex-start;padding:7px 12px;border-radius:8px;background:{{ recBg }};color:{{ recColor }};font-weight:600;font-size:14px">● {{ recommendation }}</div>
+            <div style="font-size:12px;color:oklch(0.5 0.012 265);line-height:1.4;margin-top:10px">{{ recommendationNote }}</div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:16px">
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="background:#fff;border:1px solid oklch(0.92 0.006 265);border-radius:14px;padding:22px">
+              <div style="font-weight:700;font-size:15px;margin-bottom:16px">Signal breakdown</div>
+              <sc-for list="{{ dims }}" as="d" hint-placeholder-count="4">
+                <div style="margin-bottom:16px">
+                  <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
+                    <span style="font-size:14px;font-weight:600">{{ d.name }}</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:{{ d.color }}">{{ d.score }}</span>
+                  </div>
+                  <div style="height:8px;border-radius:4px;background:oklch(0.94 0.006 265);overflow:hidden">
+                    <div style="height:100%;border-radius:4px;width:{{ d.pct }};background:{{ d.color }};animation:fs-bar 1s ease both"></div>
+                  </div>
+                  <div style="font-size:12px;color:oklch(0.52 0.012 265);margin-top:6px;line-height:1.4">{{ d.note }}</div>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="background:#fff;border:1px solid oklch(0.92 0.006 265);border-radius:14px;padding:22px">
+              <div style="font-weight:700;font-size:15px;margin-bottom:14px">Consulting criteria checklist</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 20px">
+                <sc-for list="{{ criteria }}" as="c" hint-placeholder-count="6">
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <span style="width:18px;height:18px;border-radius:5px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;background:{{ c.bg }};color:{{ c.color }}">{{ c.icon }}</span>
+                    <span style="font-size:13px;color:oklch(0.35 0.012 265)">{{ c.label }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="background:#fff;border:1px solid oklch(0.92 0.006 265);border-radius:14px;padding:22px">
+              <div style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:15px;margin-bottom:14px"><span style="width:8px;height:8px;border-radius:2px;background:oklch(0.6 0.13 150)"></span>Strengths</div>
+              <sc-for list="{{ strengths }}" as="t" hint-placeholder-count="3">
+                <div style="display:flex;gap:10px;margin-bottom:12px;font-size:13px;line-height:1.45;color:oklch(0.38 0.012 265)"><span style="color:oklch(0.55 0.13 150);flex-shrink:0">✓</span><span>{{ t }}</span></div>
+              </sc-for>
+            </div>
+
+            <div style="background:#fff;border:1px solid oklch(0.92 0.006 265);border-radius:14px;padding:22px">
+              <div style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:15px;margin-bottom:14px"><span style="width:8px;height:8px;border-radius:2px;background:oklch(0.62 0.15 25)"></span>Red flags &amp; gaps</div>
+              <sc-for list="{{ flags }}" as="f" hint-placeholder-count="3">
+                <div style="display:flex;gap:10px;margin-bottom:12px;font-size:13px;line-height:1.45;color:oklch(0.38 0.012 265)"><span style="color:oklch(0.6 0.15 25);flex-shrink:0">!</span><span>{{ f }}</span></div>
+              </sc-for>
+            </div>
+
+            <div style="background:oklch(0.975 0.012 275);border:1px solid oklch(0.9 0.03 275);border-radius:14px;padding:22px">
+              <div style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:15px;margin-bottom:14px;color:oklch(0.44 0.15 275)"><span style="width:8px;height:8px;border-radius:2px;background:oklch(0.52 0.15 275)"></span>How to improve fit</div>
+              <sc-for list="{{ recs }}" as="r" hint-placeholder-count="3">
+                <div style="display:flex;gap:10px;margin-bottom:12px;font-size:13px;line-height:1.45;color:oklch(0.36 0.02 275)"><span style="color:oklch(0.52 0.15 275);font-weight:700;flex-shrink:0">→</span><span>{{ r }}</span></div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+  </main>
+
+  <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:oklch(0.24 0.012 265);color:#fff;padding:13px 22px;border-radius:10px;font-size:14px;font-weight:500;box-shadow:0 8px 30px rgba(0,0,0,.2);animation:fs-fade .3s ease both;z-index:50">{{ toast }}</div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const SAMPLE_RESUME = `Priya Raman
+priya.raman@email.com | linkedin.com/in/priyaraman
+
+EDUCATION
+MBA, Kellogg School of Management — Top 5% of cohort, Consulting Club VP
+BA Economics, University of Michigan
+
+EXPERIENCE
+Senior Associate, Ashford Consulting Group (Jan 2024 - Present)
+Led a cross-functional team of 12 on a market-entry study for a CPG client, delivering findings two weeks ahead of schedule and informing a $30M expansion decision.
+
+Product Analyst, Meridian Retail Group (Mar 2022 - Jun 2023)
+Supported pricing strategy across 40+ SKUs; partnered with merchandising to refine the promotional calendar.
+
+Business Analyst, Northlake Partners (Jun 2019 - Feb 2022)
+Built financial models and client-ready decks across four industry verticals; supported due diligence on three acquisitions.
+
+LEADERSHIP
+Winner, Kellogg Consulting Case Cup, 2023
+Mentor, First-Gen MBA Network
+
+SKILLS
+Excel, SQL, Tableau, market sizing, competitive analysis, financial modeling`;
+
+class Component extends DCLogic {
+  state = { stage: 'upload', progress: 0, step: 0, toast: '', resumeText: SAMPLE_RESUME, fileName: 'Priya_Raman_Resume.txt', result: null };
+
+  stepLabels = ['Parsing resume & structure', 'Extracting skills and experience', 'Matching against consulting rubric', 'Scoring & modeling success'];
+
+  buildPrompt(resumeText) {
+    return `You are an experienced Accenture consulting recruiter. Score this resume against what predicts success as a Consulting Analyst (Strategy). Be honest and specific, citing evidence from the resume in your notes.
+
+Resume:
+"""${resumeText}"""
+
+Respond with ONLY valid JSON, no markdown fences, matching exactly this shape:
+{
+ "candidate": "full name found in the resume, or 'Candidate' if none",
+ "overall": <integer 0-100, overall fit score>,
+ "likelihood": <integer 0-100, likelihood of succeeding in the role>,
+ "verdict": "<2-4 word verdict, e.g. 'Strong candidate'>",
+ "verdictNote": "<one sentence explaining the verdict>",
+ "recommendation": "<one of exactly: 'Advance to interview' | 'Advance with reservations' | 'Do not advance'>",
+ "recommendationNote": "<one sentence>",
+ "dims": [
+   {"name":"Skills match vs. role","score":<0-100>,"note":"<one sentence, cite evidence>"},
+   {"name":"Experience relevance","score":<0-100>,"note":"<one sentence>"},
+   {"name":"Culture & values alignment","score":<0-100>,"note":"<one sentence>"},
+   {"name":"Keyword / ATS coverage","score":<0-100>,"note":"<one sentence>"}
+ ],
+ "criteria": [
+   {"label":"Top-tier academics","ok":<true|false>},
+   {"label":"Quantified impact","ok":<true|false>},
+   {"label":"Leadership evidence","ok":<true|false>},
+   {"label":"Brand-name experience","ok":<true|false>},
+   {"label":"Clear structure","ok":<true|false>},
+   {"label":"Client-facing exposure","ok":<true|false>}
+ ],
+ "strengths": [<3-4 short strings>],
+ "flags": [<2-4 short strings, gaps or concerns>],
+ "recs": [<3-4 short strings, concrete improvement suggestions>]
+}`;
+  }
+
+  runAI = async () => {
+    const res = await fetch('/api/analyze', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ resumeText: this.state.resumeText, fileName: this.state.fileName, targetRole: 'Accenture Consulting Analyst' }),
+    });
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error(`AI scoring failed: ${res.status} ${errorText}`);
+    }
+    const json = await res.json();
+    if (typeof json.overall !== 'number') throw new Error('unexpected AI response shape');
+    return json;
+  };
+
+  startAnalyze = async () => {
+    if (!this.state.resumeText || !this.state.resumeText.trim()) { this.flash('Add resume text first'); return; }
+    this.clear();
+    this.setState({ stage: 'analyzing', progress: 0, step: 0 });
+    this._t = setInterval(() => {
+      this.setState(s => ({ progress: Math.min(97, s.progress + 3), step: Math.min(3, Math.floor(s.progress / 26)) }));
+    }, 90);
+    let result = null;
+    try { result = await this.runAI(); }
+    catch (e) { this.flash('AI scoring failed — showing a demo scorecard instead'); }
+    clearInterval(this._t);
+    this.setState({ stage: 'results', progress: 100, step: 3, result });
+  };
+
+  handleFile = (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => this.setState({ resumeText: String(reader.result), fileName: file.name });
+    reader.readAsText(file);
+  };
+
+  setResumeText = (e) => this.setState({ resumeText: e.target.value, fileName: 'pasted-text.txt' });
+  setFileInputRef = (el) => { this._fileInput = el; };
+  triggerFile = () => { if (this._fileInput) this._fileInput.click(); };
+
+  toUpload = () => { this.clear(); this.setState({ stage: 'upload' }); };
+  downloadReport = () => this.flash('Report exported — FitSignal_Report.pdf');
+
+  flash(msg) { clearTimeout(this._toast); this.setState({ toast: msg }); this._toast = setTimeout(() => this.setState({ toast: '' }), 2800); }
+  clear() { clearInterval(this._t); }
+  componentWillUnmount() { this.clear(); clearTimeout(this._toast); }
+
+  demoFallback() {
+    return {
+      candidate: 'Candidate', overall: 75, likelihood: 68, verdict: 'Solid candidate',
+      verdictNote: 'Demo scorecard — the AI call did not return a result.',
+      recommendation: 'Advance with reservations', recommendationNote: 'Re-run once the AI service is available.',
+      dims: [
+        { name: 'Skills match vs. role', score: 75, note: 'Demo data.' },
+        { name: 'Experience relevance', score: 70, note: 'Demo data.' },
+        { name: 'Culture & values alignment', score: 80, note: 'Demo data.' },
+        { name: 'Keyword / ATS coverage', score: 65, note: 'Demo data.' },
+      ],
+      criteria: [
+        { label: 'Top-tier academics', ok: true }, { label: 'Quantified impact', ok: false },
+        { label: 'Leadership evidence', ok: true }, { label: 'Brand-name experience', ok: true },
+        { label: 'Clear structure', ok: true }, { label: 'Client-facing exposure', ok: false },
+      ],
+      strengths: ['Demo data — re-run analysis for real results.'],
+      flags: ['Demo data — re-run analysis for real results.'],
+      recs: ['Demo data — re-run analysis for real results.'],
+    };
+  }
+
+  color(v) {
+    if (v >= 80) return 'oklch(0.55 0.13 150)';
+    if (v >= 68) return 'oklch(0.65 0.14 90)';
+    return 'oklch(0.6 0.15 25)';
+  }
+
+  recBadge(rec) {
+    const red = { bg: 'oklch(0.6 0.15 25 / 0.12)', color: 'oklch(0.5 0.15 25)' };
+    const amber = { bg: 'oklch(0.72 0.14 75 / 0.16)', color: 'oklch(0.48 0.14 75)' };
+    const green = { bg: 'oklch(0.6 0.13 150 / 0.12)', color: 'oklch(0.42 0.13 150)' };
+    const neutral = { bg: 'oklch(0.9 0.006 265 / 0.5)', color: 'oklch(0.4 0.012 265)' };
+    if (/do not/i.test(rec || '')) return red;
+    if (/reservation/i.test(rec || '')) return amber;
+    if (/advance/i.test(rec || '')) return green;
+    // An unrecognised recommendation must never render as a positive result.
+    return neutral;
+  }
+
+  renderVals() {
+    const stage = this.state.stage;
+    const r = this.state.result || this.demoFallback();
+    const overall = Math.round(r.overall ?? 0);
+    const rec = this.recBadge(r.recommendation);
+    const active = 'color:oklch(0.52 0.15 275);font-weight:600';
+    const idle = 'color:oklch(0.6 0.012 265)';
+
+    const steps = this.stepLabels.map((label, i) => {
+      const done = i < this.state.step, current = i === this.state.step;
+      return {
+        label, dummy: '',
+        icon: done ? '✓' : (current ? '' : ''),
+        dotBg: done ? 'oklch(0.55 0.13 150)' : (current ? 'oklch(0.52 0.15 275)' : 'oklch(0.95 0.006 265)'),
+        dotColor: done ? '#fff' : (current ? '#fff' : 'transparent'),
+        dotBorder: done || current ? 'none' : '2px solid oklch(0.88 0.006 265)',
+        textColor: done || current ? 'oklch(0.28 0.012 265)' : 'oklch(0.65 0.012 265)',
+        weight: current ? 600 : 500,
+      };
+    });
+
+    const dims = (r.dims || []).map(d => ({ ...d, score: Math.round(d.score), pct: Math.round(d.score) + '%', color: this.color(d.score) }));
+
+    const ck = (ok) => ok
+      ? { icon: '✓', bg: 'oklch(0.6 0.13 150 / 0.14)', color: 'oklch(0.42 0.13 150)' }
+      : { icon: '–', bg: 'oklch(0.6 0.15 25 / 0.12)', color: 'oklch(0.5 0.15 25)' };
+    const criteria = (r.criteria || []).map(c => ({ label: c.label, ...ck(c.ok) }));
+
+    return {
+      isUpload: stage === 'upload', isAnalyzing: stage === 'analyzing', isResults: stage === 'results',
+      fileName: this.state.fileName, resumeText: this.state.resumeText, charCount: this.state.resumeText.length,
+      candidate: r.candidate || 'Candidate',
+      startAnalyze: this.startAnalyze, toUpload: this.toUpload, downloadReport: this.downloadReport,
+      handleFile: this.handleFile, setResumeText: this.setResumeText, setFileInputRef: this.setFileInputRef, triggerFile: this.triggerFile,
+      toast: this.state.toast,
+      stepUploadStyle: stage === 'upload' ? active : idle,
+      stepAnalyzeStyle: stage === 'analyzing' ? active : idle,
+      stepResultStyle: stage === 'results' ? active : idle,
+      progressPct: this.state.progress + '%', steps,
+      overall, overallColor: this.color(overall),
+      overallOffset: 327 * (1 - overall / 100),
+      likelihood: Math.round(r.likelihood ?? 0), verdict: r.verdict || '',
+      verdictNote: r.verdictNote || '',
+      recommendation: r.recommendation || '', recommendationNote: r.recommendationNote || '',
+      recBg: rec.bg, recColor: rec.color,
+      dims, criteria,
+      strengths: r.strengths || [], flags: r.flags || [], recs: r.recs || [],
+    };
+  }
+}
+</script>
+</body>
+</html>

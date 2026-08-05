@@ -1,0 +1,16 @@
+# Secrets — never commit. Note that $HOME itself is a git repository on this
+# machine, so an unignored .env here would be trackable.
+.env
+.env.*
+!.env.example
+*.pem
+*service-account*.json
+
+# Anything shaped like a leaked API key committed as a filename
+sk-ant-*
+sk-proj-*
+
+node_modules/
+npm-debug.log*
+
+.DS_Store

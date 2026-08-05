@@ -1,0 +1,46 @@
+MBB RESUME — EXPERIENCED-HIRE, PhD & DATA-AI PRACTICE GUIDANCE
+Tailored for a profile with: Neuroscience/Bioinformatics PhD + startup co-founder/CTO + Accenture Data & AI consulting.
+
+=== WHICH TRACK TO TARGET ===
+1) McKINSEY APD (Advanced Professional Degree)
+- PhDs, postdocs, MDs, JDs, and non-MBA Master's (4+ years between degrees) join as full-time ASSOCIATES — same level and pay as MBA hires (~$192,000 US base per Hacking the Case Interview). APDs make up more than one-third of each incoming Associate class. Can join generalist or expert paths (digital, analytics, operations).
+- 2026 deadlines (McKinsey APD "All Schools" page): graduated/graduating by Oct 2026 → deadline June 26, 2026, rolling review; graduating Dec 2026–Fall 2027 → apply July 1–Aug 11, 2026.
+- Caveat for this profile: APD is designed for candidates ~0–2 years post-PhD. With a PhD plus several years of startup + consulting experience, you sit BETWEEN APD and experienced-hire generalist. Contact recruiting/network so HR routes you to the correct track.
+
+2) EXPERIENCED-HIRE GENERALIST
+- Rare and skeptically screened. Post-MBA-equivalent generalist seats are mostly filled by MBA/PhD campus hires; experienced-hire generalist slots are very few (per self-identified consultants on Wall Street Oasis) and hinge on prior peer-firm consulting or deep, directly-relevant industry expertise. Referrals and partner networking matter disproportionately.
+
+3) DIGITAL/AI SPECIALIST TRACKS — HIGHEST LEVERAGE FOR THIS PROFILE
+- McKinsey QuantumBlack, BCG X (formerly Gamma), Bain Vector / Advanced Analytics all run year-round technical recruiting for data scientists and AI/ML engineers.
+- QuantumBlack: expects an advanced quantitative degree + strong Python/R/statistics; process typically = QuantHub/HackerRank test → Technical Experience Interviews → Personal Experience Interview (PEI).
+- BCG X / Bain Vector: technical screen + business case; both want production-grade data-product experience tied to business outcomes.
+
+=== CONVERTING AN ACADEMIC CV TO A ONE-PAGE BUSINESS RESUME ===
+- Cut to one page. Do NOT keep separate Publications/Conferences/Teaching sections — fold into a single bullet under Education, e.g. "Authored 8 peer-reviewed papers (400+ citations); presented at 3 international conferences."
+- De-jargonize ruthlessly: the first reader is often a junior recruiter, not a domain expert. If a non-scientist friend can't parse a bullet, rewrite it.
+- Quantify research: team size led, grant dollars, dataset scale, model-performance gains, students mentored, publications/citations.
+  Example transformation (ex-Bain guide): "Conducted experiments in the lab" → "Designed and executed a 12-month study across 3 clinical sites, producing findings that influenced hospital treatment protocols."
+- Use "I," not "we" — screeners must see YOUR contribution. Lead bullets with the point, never with filler like "Traveled to…" (a physics-PhD MBB partner on WSO flagged exactly this).
+- Foreground SELECTIVITY: famous/competitive labs, fellowships, medals, awards. The APD golden rule (ex-McKinsey interviewer): show you were chosen for things few people are chosen for.
+- Grad-GPA note: an omitted GPA reads as "not great" — surround credentials with awards and selectivity signals instead.
+
+=== FRAMING ENTREPRENEURSHIP (CO-FOUNDER/CTO) ===
+- Entrepreneurial drive is an explicit McKinsey screening value — founders are attractive.
+- Avoid startup clichés ("scrappy," "wore many hats," "owned end-to-end," "fast-paced") unless you specify WHAT you owned and WHAT changed.
+- Quantify: funding raised, revenue, users, team size, growth rates, exit/licensing outcomes. Use Problem → Action → Outcome.
+- Add a one-line descriptor if the company name isn't recognizable, e.g. "ErythroSight (seed-stage cell-therapy startup; $670K raised; commercial licensing exit)."
+
+=== FRAMING CURRENT DATA & AI CONSULTING (ACCENTURE) ===
+- This is the strongest consulting-relevance signal — translate delivery work into MBB language: workstreams, diligence, executive readouts, frameworks, steering committees.
+- Balance technical bullets (models, pipelines, tools) with client-facing/leadership bullets (stakeholders advised, decisions influenced, teams led).
+- Tie every technical metric to a business decision or dollar figure. Recurring warning for QuantumBlack/BCG X screening: "my AUC was 0.92" lands flat unless connected to churn reduction, risk avoided, or savings delivered.
+- Name the stack explicitly (Python, SQL, PySpark, TensorFlow/PyTorch, RAG/LLM systems, Azure/GCP, Databricks) — technical screens keyword-search for it.
+
+=== APPLICATION SEQUENCE ===
+1. Build the base one-pager (XYZ bullets, all quantified, jargon-free).
+2. Produce TWO variants: (a) generalist/APD — impact + leadership + selectivity forward; (b) technical — AI/ML stack + production systems + business-tied metrics forward.
+3. Write firm-specific cover paragraphs for McKinsey / BCG / Bain; experienced hires must explicitly answer "why consulting, why now."
+4. Network BEFORE applying: APD + experienced-hire recruiters, alumni, partners in QuantumBlack/BCG X/Vector; ask HR which track fits this profile. Referrals materially raise the odds of a human read.
+5. Timing: McKinsey APD 2026 deadlines above; QuantumBlack/BCG X/Vector hire on a rolling basis.
+6. Get an ex-MBB screener review before submitting.
+Benchmark: zero screens after 7–10 applications → shift weight to specialist AI tracks + referrals.

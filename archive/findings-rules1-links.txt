@@ -1,0 +1,43 @@
+MBB RESUME — LINKS, TEMPLATES & RESOURCES
+
+=== GITHUB / LATEX TEMPLATES ===
+- Awesome-CV (posquit0) — clean, widely used LaTeX CV/résumé/cover-letter template: https://github.com/posquit0/Awesome-CV
+- Deedy-Resume — one-page two-column XeTeX template (dense; prefer single-column variant for ATS safety): https://github.com/deedy/Deedy-Resume | Overleaf: https://www.overleaf.com/latex/templates/deedy-cv/bjryvfsjdyxz
+- Enhanced-Deedy (reversed layout): https://github.com/harshad-kadam/Enhanced-Deedy_Resume
+- Awesome-PhD-CV (LimHyungTae) — curated templates for converting academic CVs to ATS-safe industry resumes; includes Jake's Resume (single-page, ATS-optimized): https://github.com/LimHyungTae/Awesome-PhD-CV
+- Browse more: https://github.com/topics/latex-resume-template | https://github.com/topics/resume-template
+TEMPLATE CHOICE FOR MBB: single-column, minimalist, black-and-white. Two-column templates (Deedy) look modern but can break ATS parsers and deviate from consulting norms — prefer Jake's Resume / Awesome-CV single-column or a plain Word template from a firm/coaching source.
+
+=== ANNOTATED / EXAMPLE RESUMES ===
+- IGotAnOffer — 6 real anonymized resumes that got McKinsey/BCG/Bain offers + free Google Doc/PDF template: https://igotanoffer.com/blogs/mckinsey-case-interview-blog/consulting-resume
+- IGotAnOffer — PhD consulting resume guide: https://igotanoffer.com/blogs/mckinsey-case-interview-blog/phd-consulting-resume
+- IGotAnOffer — experienced-hire consulting resume: https://igotanoffer.com/blogs/mckinsey-case-interview-blog/experienced-hire-consulting-resume
+- Management Consulted — resume webinar + free MBB-standard template: https://managementconsulted.com/crafting-winning-consulting-resume/
+- Management Consulted — applying to McKinsey as a PhD: https://managementconsulted.com/breaking-mckinsey-phd/
+- Leland — annotated McKinsey-ready example resume: https://www.joinleland.com/library/a/mckinsey-resume-guide
+- Wall Street Oasis — real PhD consulting resume critiqued by MBB consultants: https://www.wallstreetoasis.com/forum/consulting/how-to-get-into-consulting-from-phd
+
+=== GUIDES (EX-MBB SCREENERS / COACHES) ===
+- Hacking the Case Interview — McKinsey resume: https://www.hackingthecaseinterview.com/pages/mckinsey-resume
+- Hacking the Case Interview — PhD resume for consulting: https://www.hackingthecaseinterview.com/pages/phd-resume-for-consulting
+- Hacking the Case Interview — experienced hires: https://www.hackingthecaseinterview.com/pages/consulting-resume-experienced-hires
+- Hacking the Case Interview — McKinsey APD recruiting: https://www.hackingthecaseinterview.com/pages/mckinsey-apd-recruiting
+- Hacking the Case Interview — QuantumBlack interview: https://www.hackingthecaseinterview.com/pages/mckinsey-quantumblack-interview
+- Hacking the Case Interview — Bain Vector interview: https://www.hackingthecaseinterview.com/pages/bain-vector-interview
+- StrategyCase (ex-McKinsey screener) — consulting resume: https://strategycase.com/consulting-resume/
+- ConsultEdge — 2026 consulting resume guide: https://consultedge.app/blog/consulting-resume-guide-2026
+- NextEp (ex-Bain interviewer) — consulting CV guide: https://nextepmbb.com/en/consulting-cv-guide-en/
+- Resume Optimizer Pro — management consulting resume: https://resumeoptimizerpro.com/blog/resume-for-management-consulting
+- PrepLounge — how to quantify impact on a resume: https://www.preplounge.com/consulting-forum/how-to-quantify-impacts-on-resume-16536
+- PrepLounge — breaking into MBB with PhD + 5 yrs industry: https://www.preplounge.com/consulting-forum/breaking-the-into-mbb-with-phd-in-industry-with-5-year-experience-24321
+- CaseInterview.com — McKinsey APD/PhD CV format: https://caseinterview.com/mckinsey-apd-phd-cv-format-for-consulting
+- Road to Offer — data science case interview guide: https://www.roadtooffer.com/blog/data-science-case-interview-guide
+
+=== PRIMARY FIRM SOURCES ===
+- McKinsey APD landing page (eligibility + deadlines): https://www.mckinsey.com/careers/students/advanced-professional-degree-candidates/all-schools
+- McKinsey — tips for APD candidates: https://www.mckinsey.com/careers/students/tips-for-advanced-professional-degree-candidates
+- McKinsey QuantumBlack — Data Scientist role: https://www.mckinsey.com/capabilities/quantumblack/careers-and-community/data-scientist
+- BCG — careers in AI (BCG X): https://careers.bcg.com/global/en/careers-in-ai
+
+=== VISUAL EXAMPLES (IMAGE SEARCHES) ===
+Best visual/annotated examples live inside the IGotAnOffer, Leland, and Management Consulted pages above (real anonymized offer-winning resumes). For quick browsing, image-search: "McKinsey resume example annotated", "BCG consulting resume template one page", "Bain resume sample PhD". Treat random image results with caution — many are coaching-site mockups, not real offer resumes; the linked pages above are the vetted set.

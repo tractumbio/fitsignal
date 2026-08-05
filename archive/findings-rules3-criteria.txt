@@ -1,0 +1,55 @@
+MBB RESUME — CRITICISM-BASED RULES FOR FIT CHECKS
+
+These are the failure modes and hard-stop rules derived from common resume criticism.
+
+1. ONE-PAGE, ONE-COLUMN ONLY
+- Reject any resume with two pages, multiple columns, tables, graphics, colors, photos, or custom layout art.
+- Use a clean, black-and-white template with standard section headings.
+
+2. NO ACADEMIC CV STRUCTURE
+- Do not preserve separate Publications, Conferences, Teaching, or Research sections.
+- Fold those accomplishments into a single Education bullet or a concise leadership/awards note.
+
+3. ACTION VERBS & PERSONAL IMPACT
+- Every bullet should start with a strong past-tense action verb.
+- Avoid "responsible for", "helped", "participated in", "worked on", "owned end-to-end".
+- Use "I" implicitly through clear ownership rather than vague group language.
+
+4. XYZ BULLET FORMULA
+- Every bullet must answer: what was accomplished, how it was done, and what was measured.
+- Prefer metrics for scope, method, and outcome.
+- If you cannot quantify the result, quantify the scope or the input.
+
+5. TECHNICAL METRICS MUST LINK TO BUSINESS VALUE
+- Do not write bullets like "AUC was 0.92" or "built a model in Python" alone.
+- Always connect technical work to a business outcome, decision, risk reduction, savings, growth, or stakeholder action.
+
+6. AVOID JARGON FOR THE FIRST READER
+- The first reader is often a junior recruiter, not a subject-matter expert.
+- Rewrite overly technical phrases so a smart non-specialist can understand the impact.
+
+7. EMPHASIZE SELECTIVITY & PRESTIGE
+- For APD/generalist roles, surface competitive signals: top schools, awards, fellowships, labs, scholarships, startup funding.
+- If a credential is not obviously strong, hide it or contextualize it with selectivity.
+
+8. ENTREPRENEURSHIP NEEDS BUSINESS CONTEXT
+- Founders and CTOs should avoid vague startup language like "fast-paced" or "wearing many hats".
+- Prefer concrete metrics: funding, revenue, users, retention, growth, team size, licensing, strategic partnerships.
+
+9. DATA/AI ROLES NEED STACK + IMPACT
+- Always name the tools, languages, and platforms used.
+- Do not leave the reader guessing whether the work was production-grade.
+- Tie model/ML work to decisions, operations, revenue, or cost outcomes.
+
+10. RED FLAGS FOR MBB FIT
+- Weak: bullets with no numbers, generic leadership claims, no client/stakeholder context.
+- Reject if the resume reads like a job description rather than a personal accomplishment story.
+- Reject if there is no evidence of structured thinking, consulting-style frameworks, or problem-solving orientation.
+
+11. APPLY WITH THE RIGHT TRACK
+- If you are not a direct-fit generalist, do not force a generalist resume; target specialist AI/data tracks with business impact language.
+- If you have both deep technical and consulting experience, create two variants and use the one that best matches the target role.
+
+12. GET AN MBB SCREENER REVIEW
+- The final resume should be reviewed by someone who has actually screened McKinsey/BCG/Bain candidates.
+- If no screens arrive after 7–10 applications, the resume or track fit needs to change.
