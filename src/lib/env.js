@@ -2,6 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import { isAvailable as claudeCliAvailable } from './provider-claude-cli.js';
+
 // src/lib/env.js -> src/lib -> src -> project root
 const PROJECT_ROOT = path.dirname(path.dirname(path.dirname(fileURLToPath(import.meta.url))));
 const ENV_PATH = path.join(PROJECT_ROOT, '.env');
@@ -62,6 +64,17 @@ const KEY_RULES = {
  */
 export function validateProviderKey(provider) {
   if (provider === 'mock') return { ok: true, message: 'mock provider — no key required' };
+
+  if (provider === 'claude-cli') {
+    return claudeCliAvailable()
+      ? { ok: true, message: 'using the local `claude` CLI — no API key required' }
+      : {
+          ok: false,
+          message:
+            'LLM_PROVIDER=claude-cli (or no API key was found) but the `claude` CLI is not on PATH. ' +
+            'Install Claude Code and log in (claude auth), set CLAUDE_CLI_BIN, or set ANTHROPIC_API_KEY/OPENAI_API_KEY.',
+        };
+  }
 
   const name = provider === 'anthropic' ? 'ANTHROPIC_API_KEY' : 'OPENAI_API_KEY';
   const rule = KEY_RULES[name];

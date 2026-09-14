@@ -72,7 +72,12 @@ formatting are definitionally absent from plain text.
 
 All settings live in `.env` — see [`.env.example`](.env.example) for the full
 list. Set one of `ANTHROPIC_API_KEY` or `OPENAI_API_KEY`; the provider is
-auto-detected, or force it with `LLM_PROVIDER=anthropic|openai|mock`.
+auto-detected, or force it with `LLM_PROVIDER=anthropic|openai|claude-cli|mock`.
+
+**No key? If the `claude` CLI is installed and logged in** (i.e. this is a machine with
+Claude Code set up), FitSignal falls back to it automatically — no key to provision,
+scores through whatever account is already logged in. This is what
+`pipeline/score.sh` in the `resume` repo relies on by default.
 
 > `.env` values **override** the surrounding shell environment. This is
 > deliberate: `~/.zshrc` on this machine exports a truncated

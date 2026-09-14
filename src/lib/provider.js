@@ -1,4 +1,5 @@
 import * as anthropic from './provider-anthropic.js';
+import * as claudeCli from './provider-claude-cli.js';
 import * as openai from './provider-openai.js';
 import * as mock from './provider-mock.js';
 
@@ -15,12 +16,21 @@ export { extractText } from './provider-openai.js';
  */
 export function resolveProvider() {
   const explicit = (process.env.LLM_PROVIDER || '').toLowerCase();
-  if (['anthropic', 'openai', 'mock'].includes(explicit)) return explicit;
-  if (explicit) throw new Error(`unknown LLM_PROVIDER "${explicit}" (expected "anthropic", "openai" or "mock")`);
+  if (['anthropic', 'openai', 'claude-cli', 'mock'].includes(explicit)) return explicit;
+  if (explicit) {
+    throw new Error(`unknown LLM_PROVIDER "${explicit}" (expected "anthropic", "openai", "claude-cli" or "mock")`);
+  }
 
   if (process.env.ANTHROPIC_API_KEY) return 'anthropic';
   if (process.env.OPENAI_API_KEY) return 'openai';
-  throw new Error('no model provider configured — set ANTHROPIC_API_KEY or OPENAI_API_KEY, or use LLM_PROVIDER=mock');
+  // No key on hand: fall back to whatever's already logged in locally,
+  // before giving up and asking for one. A machine with Claude Code set up
+  // already has everything scoring needs.
+  if (claudeCli.isAvailable()) return 'claude-cli';
+  throw new Error(
+    'no model provider configured — set ANTHROPIC_API_KEY or OPENAI_API_KEY, install and log ' +
+    'in the `claude` CLI, or use LLM_PROVIDER=mock'
+  );
 }
 
 export async function callModel({ system, user, schema }) {
@@ -33,6 +43,11 @@ export async function callModel({ system, user, schema }) {
 
   if (provider === 'anthropic') {
     const result = await anthropic.callModel({ system, user, schema, apiKey: process.env.ANTHROPIC_API_KEY });
+    return { ...result, provider };
+  }
+
+  if (provider === 'claude-cli') {
+    const result = await claudeCli.callModel({ system, user, schema });
     return { ...result, provider };
   }
 
