@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { loadRubric } from '../src/lib/rubric.js';
+import { isObservable, loadRubric } from '../src/lib/rubric.js';
 import { assess } from '../src/lib/score.js';
 import { extractJson, extractText } from '../src/lib/provider.js';
 import { buildPrompt, buildResponseSchema, detectInjection } from '../src/lib/prompt.js';
@@ -57,13 +57,29 @@ test('the AI-likeness guard rule is permanently disabled', () => {
   const r26 = rubric.byId.get('R26');
   assert.equal(r26.weight, 0, 'R26 must never carry weight');
   const { system } = buildPrompt({ rubric, resumeText: RESUME, targetRole: 'Analyst', inputMode: 'text' });
-  assert.ok(!system.includes('R26'), 'a zero-weight rule must not reach the model');
+  // The guardrail line deliberately cites R26 as its rationale; what must not
+  // reach the model is a SCORED rule block (### R26) or a schema enum entry.
+  assert.ok(!system.includes('### R26'), 'a zero-weight rule must not be rendered as a scorable rule');
+  assert.ok(!buildResponseSchema(rubric).properties.findings.items.properties.id.enum.includes('R26'),
+    'a zero-weight rule must not appear in the response schema enum');
   assert.match(system, /Never score whether the writing sounds AI-generated/);
 });
 
 test('retired rule ids are gone and not silently reused', () => {
-  for (const retired of ['R10', 'R13']) {
+  for (const retired of ['R05', 'R10', 'R13']) {
     assert.equal(rubric.byId.get(retired), undefined, `${retired} was superseded and must not exist`);
+  }
+});
+
+test('every dimension and criterion resolves against a live rule', () => {
+  // A dangling id here is not cosmetic: loadRubric() refuses to boot on it, so
+  // the whole service goes down. R05 shipped in this state.
+  const ids = new Set(rubric.rules.map((rule) => rule.id));
+  for (const dim of rubric.dimensions) {
+    for (const id of dim.rules) assert.ok(ids.has(id), `dimension "${dim.name}" references missing ${id}`);
+  }
+  for (const criterion of rubric.criteria ?? []) {
+    for (const id of criterion.from) assert.ok(ids.has(id), `criterion "${criterion.label}" references missing ${id}`);
   }
 });
 
@@ -75,6 +91,22 @@ test('unobservable rules resolve to unknown and are never guessed', () => {
   assert.equal(r01.state, 'unknown');
   assert.equal(r01.score, null);
   assert.match(result.warnings.join(' '), /R01: model scored an unobservable rule/);
+});
+
+test('pdf_layout observes everything plain text does, and more', () => {
+  // A PDF read with layout preserved is a superset of its own extracted text.
+  // Treating the two modes as disjoint returned "unknown" for every content
+  // rule whenever a PDF was scored, which emptied the scorecard.
+  const textOnly = rubric.rules.find((rule) => rule.observable_in.join() === 'text');
+  const layoutOnly = rubric.rules.find((rule) => rule.observable_in.join() === 'pdf_layout');
+  assert.ok(textOnly && layoutOnly, 'fixture rules missing from the rubric');
+
+  assert.ok(isObservable(textOnly, 'pdf_layout'), 'a text rule must resolve against a PDF');
+  assert.ok(isObservable(textOnly, 'text'));
+  assert.ok(isObservable(layoutOnly, 'pdf_layout'));
+  assert.ok(!isObservable(layoutOnly, 'text'), 'layout cannot be inferred from plain text');
+  // metadata is a different document, not a richer view of the same one.
+  assert.ok(!isObservable(textOnly, 'metadata'));
 });
 
 test('the same rule IS scored when layout is available', () => {
@@ -95,11 +127,11 @@ test('hallucinated evidence is discarded', () => {
 });
 
 test('a high score with no verifiable evidence is demoted, not trusted', () => {
-  const output = withFinding('R05', { score: 3, evidence: ['Delivered $12M in annualised savings'] });
+  const output = withFinding('R06', { score: 3, evidence: ['Delivered $12M in annualised savings'] });
   const result = run(output);
-  const r05 = result.findings.find((f) => f.id === 'R05');
-  assert.equal(r05.state, 'unknown');
-  assert.match(result.warnings.join(' '), /R05: claimed score 3 with no verifiable evidence — demoted/);
+  const r06 = result.findings.find((f) => f.id === 'R06');
+  assert.equal(r06.state, 'unknown');
+  assert.match(result.warnings.join(' '), /R06: claimed score 3 with no verifiable evidence — demoted/);
 });
 
 test('a conditional rule that does not apply neither helps nor hurts', () => {

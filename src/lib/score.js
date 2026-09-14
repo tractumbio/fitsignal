@@ -7,6 +7,8 @@
  * weights in rules/rubric.yaml. Same findings in, same numbers out, every time.
  */
 
+import { isObservable } from './rubric.js';
+
 /** Whitespace-insensitive, case-insensitive comparison for verbatim checking. */
 function normalise(text) {
   return String(text || '').replace(/\s+/g, ' ').trim().toLowerCase();
@@ -85,7 +87,7 @@ export function assess({ rubric, modelOutput, resumeText, inputMode = 'text' }) 
       continue;
     }
 
-    if (!rule.observable_in.includes(inputMode)) {
+    if (!isObservable(rule, inputMode)) {
       findings.push({
         ...base,
         state: 'unknown',

@@ -34,6 +34,7 @@ name: Consulting resume screening rubric
 # proxies R07/R15 are cut to roughly a sixth of R16 and flagged as convention.
 #
 # SUPERSEDED IN THIS VERSION (ids retired, never reused):
+#   R05 -> (none) skills-match keyword rule, dropped as unsupported
 #   R10 -> R20   accomplishment-vs-JD, restated as biodata density
 #   R13 -> R16   consistency, elevated to the primary screen-out rule
 #   R01 split    single-column moved to R18; one-page is now region-conditional
@@ -116,8 +117,11 @@ exclusions:
 # ---------------------------------------------------------------------------
 
 dimensions:
+  # R05 was retired without a replacement and is listed under SUPERSEDED above.
+  # It survived here as a dangling reference, which the boot-time validator
+  # rejected — the rubric could not load at all until it was removed.
   - name: Skills match vs. role
-    rules: [R05, R09, R25]
+    rules: [R09, R25]
   - name: Experience relevance
     rules: [R08, R11, R12, R14, R15, R21, R22, R23]
   - name: Impact communication

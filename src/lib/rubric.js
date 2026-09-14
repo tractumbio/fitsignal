@@ -4,6 +4,29 @@ import { parse } from 'yaml';
 const RUBRIC_PATH = new URL('../../rules/rubric.yaml', import.meta.url);
 
 /**
+ * Which declared input modes each actual input mode can satisfy.
+ *
+ * A rule declares the mode it NEEDS. A PDF rendered with layout preserved is a
+ * strict superset of plain text: everything readable in the extracted text is
+ * still readable, plus column geometry and page count. Without this hierarchy,
+ * scoring a PDF returned `unknown` for every rule declared `[text]` — which is
+ * most of the content rules — and the scorecard collapsed to the handful of
+ * layout rules. `metadata` (a LinkedIn profile) is deliberately NOT a superset
+ * of either: it is a different document.
+ */
+export const MODE_COVERS = {
+  text: ['text'],
+  pdf_layout: ['pdf_layout', 'text'],
+  metadata: ['metadata'],
+};
+
+/** True when `inputMode` can actually observe what `rule` requires. */
+export function isObservable(rule, inputMode) {
+  const covered = MODE_COVERS[inputMode] ?? [inputMode];
+  return rule.observable_in.some((needed) => covered.includes(needed));
+}
+
+/**
  * Loads and validates the scoring rubric.
  *
  * This replaces the previous behaviour, which read `fit_rules.txt` — a list of

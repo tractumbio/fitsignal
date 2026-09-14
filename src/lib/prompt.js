@@ -1,3 +1,5 @@
+import { isObservable } from './rubric.js';
+
 const RESUME_OPEN = '<<<RESUME_TEXT_BEGIN>>>';
 const RESUME_CLOSE = '<<<RESUME_TEXT_END>>>';
 
@@ -22,7 +24,7 @@ export function detectInjection(resumeText) {
 }
 
 function renderRule(rule, inputMode) {
-  const observable = rule.observable_in.includes(inputMode);
+  const observable = isObservable(rule, inputMode);
   const lines = [
     `### ${rule.id} — ${rule.name}`,
     `Test: ${String(rule.test).trim()}`,
