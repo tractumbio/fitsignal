@@ -38,7 +38,8 @@ for f in "${files[@]}"; do
   content+=$'\n'"--- $f ---"$'\n'"$(cat "$f")"$'\n'
 done
 if [[ ! -t 0 ]]; then
-  content+=$'\n'"--- stdin ---"$'\n'"$(cat)"$'\n'
+  piped="$(cat)"
+  [[ -z "$piped" ]] || content+=$'\n'"--- stdin ---"$'\n'"$piped"$'\n'
 fi
 
 [[ -n "$request$content" ]] || { echo "Nothing to send. Pass a request and/or content (see -h)." >&2; exit 1; }
